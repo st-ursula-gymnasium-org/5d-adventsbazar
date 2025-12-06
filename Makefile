@@ -35,6 +35,45 @@ generate_qr_code:
 	qrencode -o adventsbazar_qr.png "https://st-ursula-gymnasium-org.github.io/5d-adventsbazar"
 	@echo "QR code saved to: adventsbazar_qr.png"
 
+# ============================================================================
+# Publishing
+# ============================================================================
+
+.PHONY: publish
+
+## Regenerate pages, commit changes, and push to GitHub
+publish: generate_pages
+	@echo "Publishing changes to GitHub..."
+	if ! git diff --quiet docs/ || ! git diff --cached --quiet docs/ || [ -n "$$(git ls-files --others --exclude-standard docs/)" ]; then
+		echo "Changes detected in docs/ folder..."
+		git add docs/
+		git status --short
+		echo "Creating commit..."
+		git commit -m "Update generated pages" \
+			-m "" \
+			-m "Generated with Claude Code" \
+			-m "https://claude.com/claude-code" \
+			-m "" \
+			-m "Co-Authored-By: Claude <noreply@anthropic.com>"
+		echo "Pushing to GitHub..."
+		GIT_USER=$$(cat /home/a2/pswd/st-ursula-gymnasium-org/github-user.txt | head -1)
+		GIT_TOKEN=$$(cat /home/a2/pswd/st-ursula-gymnasium-org/github-password.txt | head -1)
+		REPO_URL=$$(git config --get remote.origin.url)
+		if [[ $$REPO_URL == https://* ]]; then
+			REPO_PATH=$$(echo $$REPO_URL | sed 's|https://github.com/||')
+			git push "https://$$GIT_USER:$$GIT_TOKEN@github.com/$$REPO_PATH" HEAD
+		else
+			echo "Warning: Remote URL is not HTTPS. Attempting regular push..."
+			git push
+		fi
+		echo "✓ Published successfully!"
+	else
+		echo "No changes to publish."
+	fi
+
+# ============================================================================
+# Help
+# ============================================================================
 
 ## Print this help
 help::

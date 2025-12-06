@@ -223,6 +223,40 @@ The Makefile includes a target to generate QR code for the site:
 make generate_qr_code
 ```
 
+## Publishing to GitHub Pages
+
+### Automated Publishing
+Use the `publish` target to regenerate pages and deploy to GitHub:
+
+```bash
+make publish
+```
+
+This target will:
+1. **Regenerate all pages** from CSV data
+2. **Check for changes** in `docs/` folder
+3. **Stage changes** with `git add docs/`
+4. **Create commit** with message:
+   ```
+   Update generated pages
+
+   Generated with Claude Code
+   https://claude.com/claude-code
+
+   Co-Authored-By: Claude <noreply@anthropic.com>
+   ```
+5. **Push to GitHub** using credentials from:
+   - Username: `/home/a2/pswd/st-ursula-gymnasium-org/github-user.txt`
+   - Token: `/home/a2/pswd/st-ursula-gymnasium-org/github-password.txt`
+6. **Automatic deployment** via GitHub Pages
+
+### Security Notes
+- Git credentials are read from files (not hardcoded)
+- Token is used for HTTPS authentication
+- Only commits if there are actual changes
+- Follows git safety protocols (no force push, proper attribution)
+- Plain ASCII text only (no emojis or special Unicode characters)
+
 ## Coding Standards & Best Practices
 
 ### ⚠️ IMPORTANT: Always Follow These Guidelines
@@ -275,6 +309,12 @@ make generate_qr_code
    - Use AWK for CSV parsing and text processing
    - Use sed for simple text substitution
    - UUID generation: `/proc/sys/kernel/random/uuid` or `uuidgen`
+
+5. **Text and Character Encoding**
+   - Use plain ASCII text whenever possible (no emojis)
+   - For internationalization: UTF-8 encoding is required
+   - Avoid Unicode decorative characters in code, comments, or commit messages
+   - Exception: User-facing content in German (ä, ö, ü, ß, ©)
 
 ## Implementation Status
 
