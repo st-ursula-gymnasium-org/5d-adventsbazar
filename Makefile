@@ -33,10 +33,14 @@ generate_pages:
 generate_qr_code:
 	@echo "Generating QR code for GitHub Pages URL..."
 	qrencode -o adventsbazar_qr.png "https://st-ursula-gymnasium-org.github.io/5d-adventsbazar"
-	@echo "QR code saved to: adventsbazar_qr.png"
+	echo "QR code saved to: adventsbazar_qr.png"
 	echo "Generating QR code for Wish google Form ..."
 	qrencode -o wishform_qr.png https://docs.google.com/forms/d/e/1FAIpQLSfeK7ifScZVvFbH5UfRMPNKB6O2JFtOJq012DKXoQsXeE5jQw/viewform
-	echo "QR code saved to: wishform_qr.png 
+	echo "QR code saved to: wishform_qr.png"
+	echo "Generating QR code for Vodeo ..."
+	qrencode -o adventsbazar_video_qr.png https://st-ursula-gymnasium-org.github.io/5d-adventsbazar/video.html
+	echo "QR code saved to adventsbazar_video_qr.png"
+
 # ============================================================================
 # Publishing
 # ============================================================================
