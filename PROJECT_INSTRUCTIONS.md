@@ -257,6 +257,33 @@ This target will:
 - Follows git safety protocols (no force push, proper attribution)
 - Plain ASCII text only (no emojis or special Unicode characters)
 
+## Pushing Code Changes
+
+### Push to GitHub
+Use the `push` target to push already-committed changes to GitHub:
+
+```bash
+make push
+```
+
+This target will:
+1. **Read credentials** from secure files
+2. **Push commits** to GitHub using token authentication
+
+**Workflow:**
+```bash
+# Make your changes
+git add .
+git commit -m "Your commit message"
+
+# Push using stored credentials
+make push
+```
+
+**Difference from `publish`:**
+- `publish`: Regenerates pages, commits `docs/`, and pushes
+- `push`: Only pushes existing commits (assumes you already committed)
+
 ## Coding Standards & Best Practices
 
 ### ⚠️ IMPORTANT: Always Follow These Guidelines

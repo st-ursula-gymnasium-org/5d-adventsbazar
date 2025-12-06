@@ -71,6 +71,23 @@ publish: generate_pages
 		echo "No changes to publish."
 	fi
 
+.PHONY: push
+
+## Push commits to GitHub using stored credentials
+push:
+	@echo "Pushing to GitHub..."
+	GIT_USER=$$(cat /home/a2/pswd/st-ursula-gymnasium-org/github-user.txt | head -1)
+	GIT_TOKEN=$$(cat /home/a2/pswd/st-ursula-gymnasium-org/github-password.txt | head -1)
+	REPO_URL=$$(git config --get remote.origin.url)
+	if [[ $$REPO_URL == https://* ]]; then
+		REPO_PATH=$$(echo $$REPO_URL | sed 's|https://github.com/||')
+		git push "https://$$GIT_USER:$$GIT_TOKEN@github.com/$$REPO_PATH" HEAD
+	else
+		echo "Warning: Remote URL is not HTTPS. Attempting regular push..."
+		git push
+	fi
+	echo "✓ Pushed successfully!"
+
 # ============================================================================
 # Help
 # ============================================================================
