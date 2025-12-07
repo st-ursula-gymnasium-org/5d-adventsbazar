@@ -123,8 +123,14 @@ main() {
     cat > "$INDEX_FILE" << 'EOF'
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<title>Redirecting...</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Redirecting...</title>
+</head>
+<body>
 <script>
   const pages = [
 EOF
@@ -144,6 +150,7 @@ EOF
   location.href = target;
 </script>
 <p>Redirecting…</p>
+</body>
 </html>
 EOF
 
